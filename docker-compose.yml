@@ -1,0 +1,17 @@
+version: '3'
+services:
+  product-service:
+    build: ./product
+    volumes:
+      - ./product:/usr/src/webapp
+    ports:
+      - 8080:80
+      
+  website:
+    image: tomcat
+    volumes:
+      - ./website:/var/www/html
+    ports:
+      - 8888:80
+    depends_on:
+      - product-service
