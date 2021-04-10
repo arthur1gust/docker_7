@@ -1,17 +1,18 @@
-version: '3'
+version: "3"
 services:
   product-service:
-    build: ./product
+    build: ./build
     volumes:
-      - ./product:/usr/src/webapp
-    ports:
-      - 8080:80
+      - repo:/usr/local/
       
-  website:
-    image: tomcat
-    volumes:
-      - ./website:/var/www/html
-    ports:
-      - 8888:80
+  tomcat:
+    image: tomcat:9.0-jdk8-adoptopenjdk-hotspot
     depends_on:
-      - product-service
+      - "product-service"
+    ports:
+      - 8080:8080
+    volumes:
+      - repo:/usr/local/tomcat/webapps
+      
+volumes:
+  repo:
